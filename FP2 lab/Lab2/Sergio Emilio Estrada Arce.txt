@@ -1,0 +1,132 @@
+//Laboratorio Nro 2 - Ejercicio 1 
+//Autor: Sergio Estrada Arce
+//Tiempo: 1h con 40m
+package Ejercicios;
+import java.util.*;
+public class Ejercicio1 {
+    public static void main(String[] args) {
+        String ahor1 =
+                " +----+\n" +
+                " |    |\n" +
+                "      |\n" +
+                "      |\n" +
+                "      |\n" +
+                "      |\n" +
+                " =========\n";
+        String ahor2 =
+                " +----+\n" +
+                " |    |\n" +
+                " O    |\n" +
+                "      |\n" +
+                "      |\n" +
+                "      |\n" +
+                " =========\n";
+        String ahor3 =
+                " +----+\n" +
+                " |    |\n" +
+                " O    |\n" +
+                " |    |\n" +
+                "      |\n" +
+                "      |\n" +
+                " =========\n";
+        String ahor4 =
+                " +----+\n" +
+                " |    |\n" +
+                " O    |\n" +
+                " |    |\n" +
+                " /     |\n" +
+                "      |\n" +
+                " =========\n";
+        String ahor5 =
+                " +----+\n" +
+                " |    |\n" +
+                " O    |\n" +
+                " |    |\n" +
+                " / \\   |\n" +
+                "      |\n" +
+                " =========\n";
+        String ahor6 =
+                " +----+\n" +
+                " |    |\n" +
+                " O    |\n" +
+                "/|    |\n" +
+                "/ \\   |\n" +
+                "      |\n" +
+                " =========\n";
+        String ahor7 =
+                " +----+\n" +
+                " |    |\n" +
+                " O    |\n" +
+                "/|\\   |\n" +
+                "/ \\   |\n" +
+                "      |\n" +
+                " =========\n";
+        
+        String[] figuras = {ahor1, ahor2, ahor3, ahor4, ahor5, ahor6, ahor7};
+        int contador = 1;
+        String letra;
+        String[] palabras = {"programacion", "java", "indentacion", "clases", "objetos", "desarrollador", "pruebas"};
+        String palabraSecreta = getPalabraSecreta(palabras);
+        StringBuilder palabraAdivinada = new StringBuilder("_".repeat(palabraSecreta.length()));
+        System.out.println(figuras[0]);
+        mostrarBlancos(palabraAdivinada);
+        System.out.println("\n");
+        while (contador <= 6 && !palabraCompletada(palabraAdivinada)) {  
+            letra = ingreseLetra();
+            if (letraEnPalabraSecreta(letra, palabraSecreta)) {
+                actualizarBlancos(letra, palabraSecreta, palabraAdivinada);
+                mostrarBlancos(palabraAdivinada);
+            } else {
+                System.out.println(figuras[contador]);
+                contador++;
+            }
+        }
+        if (palabraCompletada(palabraAdivinada)) {
+            System.out.println("¡Felicidades! Adivinaste la palabra: " + palabraSecreta);
+        } else {
+            System.out.println("Lo siento, perdiste. La palabra secreta era: " + palabraSecreta);
+        }
+        System.out.println("\n");
+    }
+    public static String getPalabraSecreta(String[] lasPalabras) {
+        int indiceMayor = lasPalabras.length - 1;
+        int indiceMenor = 0;
+        int ind = (int) ((Math.random() * (indiceMayor - indiceMenor + 1)) + indiceMenor);
+        return lasPalabras[ind];
+    }
+    public static void mostrarBlancos(StringBuilder palabraAdivinada) {
+        for (int i = 0; i < palabraAdivinada.length(); i++) {
+            System.out.print(palabraAdivinada.charAt(i) + " ");
+        }
+        System.out.println();
+    }
+    public static String ingreseLetra() {
+        String laLetra;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese una letra: ");
+        laLetra = sc.next().toLowerCase();
+        while (laLetra.length() != 1 || !laLetra.matches("[a-z]")) {  
+            System.out.println("Entrada inválida. Ingrese solo una letra (a-z): ");
+            laLetra = sc.next().toLowerCase();
+        }
+        return laLetra;
+    }
+    public static boolean letraEnPalabraSecreta(String letra, String palabraSecreta) {
+        return palabraSecreta.contains(letra);
+    }
+    public static void actualizarBlancos(String letra, String palabraSecreta, StringBuilder palabraAdivinada) {
+        for (int i = 0; i < palabraSecreta.length(); i++) {
+            if (palabraSecreta.charAt(i) == letra.charAt(0)) {
+                palabraAdivinada.setCharAt(i, letra.charAt(0));
+            }
+        }
+    }
+    public static boolean palabraCompletada(StringBuilder palabraAdivinada) {
+        for (int i = 0; i < palabraAdivinada.length(); i++) {
+            if (palabraAdivinada.charAt(i) == '_') {
+                return false; 
+            }
+        }
+        return true; 
+    }
+}

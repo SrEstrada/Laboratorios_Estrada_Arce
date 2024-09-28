@@ -1,10 +1,8 @@
-//Laboratorio Nro 2 - Ejercicio 1 
-//Autor: Sergio Estrada Arce
-//Tiempo: 1h con 40m
 package Ejercicios;
 import java.util.*;
 public class Ejercicio1 {
     public static void main(String[] args) {
+        // Figuras del ahorcado en diferentes etapas según los errores
         String ahor1 =
                 " +----+\n" +
                 " |    |\n" +
@@ -61,59 +59,84 @@ public class Ejercicio1 {
                 "/ \\   |\n" +
                 "      |\n" +
                 " =========\n";
-        
+
         String[] figuras = {ahor1, ahor2, ahor3, ahor4, ahor5, ahor6, ahor7};
-        int contador = 1;
+
+        int contador = 1; // Lleva la cuenta de los errores (máximo 6)
         String letra;
+
+        // Palabras disponibles para el juego
         String[] palabras = {"programacion", "java", "indentacion", "clases", "objetos", "desarrollador", "pruebas"};
-        String palabraSecreta = getPalabraSecreta(palabras);
+        String palabraSecreta = getPalabraSecreta(palabras); // Selección aleatoria
+
+        // La palabra a adivinar se representa inicialmente con guiones bajos
         StringBuilder palabraAdivinada = new StringBuilder("_".repeat(palabraSecreta.length()));
-        System.out.println(figuras[0]);
-        mostrarBlancos(palabraAdivinada);
+
+        System.out.println(figuras[0]); // Muestra el estado inicial del ahorcado
+        mostrarBlancos(palabraAdivinada); // Muestra la palabra oculta (con guiones)
+
         System.out.println("\n");
-        while (contador <= 6 && !palabraCompletada(palabraAdivinada)) {  
-            letra = ingreseLetra();
+
+        // Bucle que sigue hasta que se adivine la palabra o se alcancen los 6 errores
+        while (contador <= 6 && !palabraCompletada(palabraAdivinada)) {
+            letra = ingreseLetra(); // Se obtiene la letra ingresada por el jugador
+
             if (letraEnPalabraSecreta(letra, palabraSecreta)) {
+                // Actualiza la palabra mostrada si la letra es correcta
                 actualizarBlancos(letra, palabraSecreta, palabraAdivinada);
                 mostrarBlancos(palabraAdivinada);
             } else {
+                // Muestra la siguiente etapa del ahorcado en caso de error
                 System.out.println(figuras[contador]);
-                contador++;
+                contador++; // Se incrementa el número de errores
             }
         }
+
+        // Verifica si el jugador ganó o perdió, y muestra el mensaje correspondiente
         if (palabraCompletada(palabraAdivinada)) {
             System.out.println("¡Felicidades! Adivinaste la palabra: " + palabraSecreta);
         } else {
             System.out.println("Lo siento, perdiste. La palabra secreta era: " + palabraSecreta);
         }
+
         System.out.println("\n");
     }
+
+    // Selecciona aleatoriamente una palabra del arreglo de palabras
     public static String getPalabraSecreta(String[] lasPalabras) {
         int indiceMayor = lasPalabras.length - 1;
-        int indiceMenor = 0;
-        int ind = (int) ((Math.random() * (indiceMayor - indiceMenor + 1)) + indiceMenor);
+        int ind = (int) ((Math.random() * (indiceMayor + 1)));
         return lasPalabras[ind];
     }
+
+    // Muestra la palabra oculta con guiones o letras adivinadas
     public static void mostrarBlancos(StringBuilder palabraAdivinada) {
         for (int i = 0; i < palabraAdivinada.length(); i++) {
             System.out.print(palabraAdivinada.charAt(i) + " ");
         }
         System.out.println();
     }
+
+    // Pide al usuario una letra y verifica que sea válida (una sola letra de 'a' a 'z')
     public static String ingreseLetra() {
-        String laLetra;
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese una letra: ");
-        laLetra = sc.next().toLowerCase();
-        while (laLetra.length() != 1 || !laLetra.matches("[a-z]")) {  
+        String laLetra = sc.next().toLowerCase();
+
+        // Asegura que solo se ingrese una letra válida
+        while (laLetra.length() != 1 || !laLetra.matches("[a-z]")) {
             System.out.println("Entrada inválida. Ingrese solo una letra (a-z): ");
             laLetra = sc.next().toLowerCase();
         }
         return laLetra;
     }
+
+    // Verifica si la letra ingresada está en la palabra secreta
     public static boolean letraEnPalabraSecreta(String letra, String palabraSecreta) {
-        return palabraSecreta.contains(letra);
+        return palabraSecreta.contains(letra); // Uso del método contains
     }
+
+    // Actualiza los guiones bajos por la letra adivinada en la posición correcta
     public static void actualizarBlancos(String letra, String palabraSecreta, StringBuilder palabraAdivinada) {
         for (int i = 0; i < palabraSecreta.length(); i++) {
             if (palabraSecreta.charAt(i) == letra.charAt(0)) {
@@ -121,12 +144,9 @@ public class Ejercicio1 {
             }
         }
     }
+
+    // Verifica si la palabra ya ha sido completamente adivinada
     public static boolean palabraCompletada(StringBuilder palabraAdivinada) {
-        for (int i = 0; i < palabraAdivinada.length(); i++) {
-            if (palabraAdivinada.charAt(i) == '_') {
-                return false; 
-            }
-        }
-        return true; 
+        return !palabraAdivinada.toString().contains("_");
     }
 }

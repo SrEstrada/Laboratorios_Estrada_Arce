@@ -1,0 +1,51 @@
+// Laboratorio Nro 3 - Ejercicio 3
+// Autor: Sergio Estrada Arce
+// Tiempo: 25m
+package Ejerciicios;
+import java.util.Random;
+class Guerrero { 
+    String nombre;
+    public Guerrero(String nombre) {
+        this.nombre = nombre;
+    }
+    public String getNombre() {
+        return nombre;
+    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+}
+public class Ejercicio3 {
+    public static void main(String[] args) {
+        Random random = new Random();
+        Guerrero[] ejercito1 = new Guerrero[random.nextInt(5) + 1];
+        Guerrero[] ejercito2 = new Guerrero[random.nextInt(5) + 1];
+        PonerNombre(ejercito1);
+        PonerNombre(ejercito2);
+        System.out.println("Ejército 1:");
+        Imprimir(ejercito1);
+        System.out.println("Ejército 2:");
+        Imprimir(ejercito2);
+        ImprimirGanador(ejercito1, ejercito2);
+    }
+    public static void PonerNombre(Guerrero[] ejercito) {
+        for (int i = 0; i < ejercito.length; i++) {
+            ejercito[i] = new Guerrero("Soldado" + (i + 1)); 
+        }
+    }
+    public static void Imprimir(Guerrero[] ejercito) {
+        for (Guerrero guerrero : ejercito) {
+            System.out.println(guerrero.getNombre());
+        }
+    }
+    public static void ImprimirGanador(Guerrero[] ejercito1, Guerrero[] ejercito2) {
+        if (ejercito1.length > ejercito2.length) {
+            System.out.println("Ejército 1 ganó con " + ejercito1.length + " soldados.");
+        } else if (ejercito2.length > ejercito1.length) {
+            System.out.println("Ejército 2 ganó con " + ejercito2.length + " soldados.");
+        } else {
+            System.out.println("Empate.");
+        }
+    }
+}
+

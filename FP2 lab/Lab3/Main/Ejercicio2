@@ -1,0 +1,43 @@
+// Laboratorio Nro 3 - Ejercicio 2
+// Autor: Sergio Estrada Arce
+// Tiempo: 15m
+package Ejerciicios;
+import java.util.Scanner;
+class Soldado {
+    String nombre;
+    int vida;
+    public Soldado(String nombre, int vida) {
+        this.nombre = nombre;
+        this.vida = vida;
+    }
+    public String getNombre() {
+        return nombre;
+    }
+    public int getVida() {
+        return vida;
+    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
+}
+public class Ejercicio2 {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        Soldado[] soldados = new Soldado[5];  
+        System.out.println("Ingrese los nombres y la vida de cada soldado:");
+        for (int i = 0; i < soldados.length; i++) {
+            System.out.print("Nombre del soldado " + (i + 1) + ": ");
+            String nombre = scan.next();
+            System.out.print("Vida del soldado " + (i + 1) + ": ");
+            int vida = scan.nextInt();
+            soldados[i] = new Soldado(nombre, vida);  
+        }
+        System.out.println("Los soldados y sus vidas son:");
+        for (Soldado soldado : soldados) {
+            System.out.println(soldado.getNombre() + ": " + soldado.getVida());
+        }
+    }
+}

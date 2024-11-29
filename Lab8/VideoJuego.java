@@ -2,13 +2,13 @@ import java.util.*;
 
 public class VideoJuego {
     private Soldado[][] tablero;
-    public Soldado[] ejercito1;
-    public Soldado[] ejercito2;
+    private HashMap<String, Soldado> ejercito1;
+    private HashMap<String, Soldado> ejercito2;
 
     public VideoJuego(int filas, int columnas) {
         tablero = new Soldado[filas][columnas];
-        ejercito1 = new Soldado[10];
-        ejercito2 = new Soldado[10];
+        ejercito1 = new HashMap<>();
+        ejercito2 = new HashMap<>();
         inicializarEjercitos();
     }
 

@@ -63,28 +63,20 @@ private void inicializarEjercitos() {
             System.out.println("|");
         }
     }
-
-    public double promedioVida(Soldado[] ejercito) {
+    public double promedioVida(HashMap<String, Soldado> ejercito) {
         int totalVida = 0;
-        int soldadosValidos = 0;
-        for (Soldado soldado : ejercito) {
-            if (soldado != null) {
-                totalVida += soldado.getVida();
-                soldadosValidos++;
-            }
+        for (Soldado soldado : ejercito.values()) {
+            totalVida += soldado.getVida();
         }
-        return soldadosValidos > 0 ? (double) totalVida / soldadosValidos : 0;
+        return ejercito.size() > 0 ? (double) totalVida / ejercito.size() : 0;
     }
 
-    public void mostrarSoldadosPorEjercito(Soldado[] ejercito) {
+    public void mostrarSoldadosPorEjercito(HashMap<String, Soldado> ejercito) {
         System.out.println("Soldados del ejército:");
-        for (Soldado soldado : ejercito) {
-            if (soldado != null) {
-                System.out.println(soldado);
-            }
+        for (Soldado soldado : ejercito.values()) {
+            System.out.println(soldado);
         }
     }
-
     public void rankingSoldadosBurbuja(Soldado[] ejercito) {
         for (int i = 0; i < ejercito.length - 1; i++) {
             for (int j = 0; j < ejercito.length - 1 - i; j++) {

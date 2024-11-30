@@ -77,49 +77,29 @@ private void inicializarEjercitos() {
             System.out.println(soldado);
         }
     }
-    public void rankingSoldadosBurbuja(Soldado[] ejercito) {
-        for (int i = 0; i < ejercito.length - 1; i++) {
-            for (int j = 0; j < ejercito.length - 1 - i; j++) {
-                if (ejercito[j] != null && ejercito[j + 1] != null &&
-                    ejercito[j].getVida() < ejercito[j + 1].getVida()) {
-                    Soldado temp = ejercito[j];
-                    ejercito[j] = ejercito[j + 1];
-                    ejercito[j + 1] = temp;
+    public void rankingSoldadosBurbuja(HashMap<String, Soldado> ejercito) {
+        List<Soldado> listaSoldados = new ArrayList<>(ejercito.values());
+        for (int i = 0; i < listaSoldados.size() - 1; i++) {
+            for (int j = 0; j < listaSoldados.size() - 1 - i; j++) {
+                if (listaSoldados.get(j).getVida() < listaSoldados.get(j + 1).getVida()) {
+                    Collections.swap(listaSoldados, j, j + 1);
                 }
             }
         }
         System.out.println("Ranking de soldados por burbuja:");
-        mostrarSoldadosPorEjercito(ejercito);
+        listaSoldados.forEach(System.out::println);
     }
 
-    public void rankingSoldadosQuicksort(Soldado[] ejercito, int inicio, int fin) {
-        if (inicio < fin) {
-            int indiceParticion = particion(ejercito, inicio, fin);
-            rankingSoldadosQuicksort(ejercito, inicio, indiceParticion - 1);
-            rankingSoldadosQuicksort(ejercito, indiceParticion + 1, fin);
-        }
-    }
-
-    private int particion(Soldado[] ejercito, int inicio, int fin) {
-        int pivote = ejercito[fin].getVida();
-        int i = inicio - 1;
-        for (int j = inicio; j < fin; j++) {
-            if (ejercito[j] != null && ejercito[j].getVida() > pivote) {
-                i++;
-                Soldado temp = ejercito[i];
-                ejercito[i] = ejercito[j];
-                ejercito[j] = temp;
-            }
-        }
-        Soldado temp = ejercito[i + 1];
-        ejercito[i + 1] = ejercito[fin];
-        ejercito[fin] = temp;
-        return i + 1;
+    public void rankingSoldadosQuicksort(HashMap<String, Soldado> ejercito) {
+        List<Soldado> listaSoldados = new ArrayList<>(ejercito.values());
+        listaSoldados.sort((a, b) -> Integer.compare(b.getVida(), a.getVida()));
+        System.out.println("Ranking de soldados por quicksort:");
+        listaSoldados.forEach(System.out::println);
     }
 
     public void determinarGanador() {
-        int vidaTotalEjercito1 = sumarVida(ejercito1);
-        int vidaTotalEjercito2 = sumarVida(ejercito2);
+        int vidaTotalEjercito1 = ejercito1.values().stream().mapToInt(Soldado::getVida).sum();
+        int vidaTotalEjercito2 = ejercito2.values().stream().mapToInt(Soldado::getVida).sum();
 
         System.out.println("Vida total del Ejército 1: " + vidaTotalEjercito1);
         System.out.println("Vida total del Ejército 2: " + vidaTotalEjercito2);
@@ -141,11 +121,11 @@ private void inicializarEjercitos() {
         }
         return vidaTotal;
     }
-    public Soldado[] getEjercito1() {
+    public HashMap<String, Soldado> getEjercito1() {
         return ejercito1;
     }
 
-    public Soldado[] getEjercito2() {
+    public HashMap<String, Soldado> getEjercito2() {
         return ejercito2;
     }
 }
